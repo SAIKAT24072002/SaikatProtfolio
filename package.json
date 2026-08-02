@@ -1,0 +1,16 @@
+{
+  "name": "mern-developer-portfolio",
+  "version": "1.0.0",
+  "description": "Professional Full-Stack MERN Developer Portfolio Workspace",
+  "scripts": {
+    "install-all": "npm install && npm install --prefix client && npm install --prefix server",
+    "client": "npm run dev --prefix client",
+    "server": "npm run dev --prefix server",
+    "dev": "concurrently \"npm run client\" \"npm run server\"",
+    "seed": "npm run seed --prefix server",
+    "build": "npm run build --prefix client"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
