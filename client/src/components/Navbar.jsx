@@ -96,19 +96,6 @@ const Navbar = ({ profile }) => {
             
             {/* Theme switch */}
             <ThemeToggle />
-
-            {/* Resume button */}
-            {profile?.resume && (
-              <a
-                href={profile.resume}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 rounded-lg shadow-sm transition-all duration-200 hover:scale-105"
-              >
-                <FileDown className="h-4 w-4" />
-                Resume
-              </a>
-            )}
           </div>
 
           {/* Mobile hamburger & toggle */}
@@ -141,17 +128,6 @@ const Navbar = ({ profile }) => {
               {item.label}
             </button>
           ))}
-          {profile?.resume && (
-            <a
-              href={profile.resume}
-              target="_blank"
-              rel="noreferrer"
-              className="flex justify-center items-center gap-1.5 w-full py-2.5 px-3 font-semibold text-xs text-white bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 rounded-lg text-center"
-            >
-              <FileDown className="h-4 w-4" />
-              Download Resume
-            </a>
-          )}
         </div>
       </div>
     </nav>
