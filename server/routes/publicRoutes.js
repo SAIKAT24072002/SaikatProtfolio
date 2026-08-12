@@ -1,5 +1,5 @@
 import express from 'express';
-import { getProfile } from '../controllers/profileController.js';
+import { getProfile, downloadResume } from '../controllers/profileController.js';
 import { getProjects, getProjectBySlug } from '../controllers/projectController.js';
 import { getSkills } from '../controllers/skillController.js';
 import { getExperiences } from '../controllers/experienceController.js';
@@ -24,6 +24,7 @@ const messageLimiter = rateLimit({
 
 // GET endpoints
 router.get('/profile', getProfile);
+router.get('/profile/resume/download', downloadResume);
 router.get('/projects', getProjects);
 router.get('/projects/:slug', getProjectBySlug);
 router.get('/skills', getSkills);

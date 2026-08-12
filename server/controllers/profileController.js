@@ -17,6 +17,43 @@ export const getProfile = async (req, res, next) => {
   }
 };
 
+// @desc    Download the latest resume with a stable PDF filename
+// @route   GET /api/profile/resume/download
+// @access  Public
+export const downloadResume = async (req, res, next) => {
+  try {
+    const profile = await Profile.findOne().select('resume');
+    if (!profile?.resume) {
+      res.status(404);
+      return next(new Error('Resume file is not available.'));
+    }
+
+    const upstreamResponse = await fetch(profile.resume, { redirect: 'follow' });
+    if (!upstreamResponse.ok) {
+      res.status(502);
+      return next(new Error('The latest resume could not be retrieved.'));
+    }
+
+    const resumeBuffer = Buffer.from(await upstreamResponse.arrayBuffer());
+    if (resumeBuffer.subarray(0, 4).toString() !== '%PDF') {
+      res.status(502);
+      return next(new Error('The latest resume is not a valid PDF document.'));
+    }
+
+    res.status(200)
+      .set({
+        'Content-Type': 'application/pdf',
+        'Content-Length': String(resumeBuffer.length),
+        'Content-Disposition': 'attachment; filename="Saikat_Khamrai_Resume.pdf"',
+        'Cache-Control': 'no-store',
+        'X-Content-Type-Options': 'nosniff'
+      })
+      .send(resumeBuffer);
+  } catch (err) {
+    next(err);
+  }
+};
+
 // @desc    Update portfolio profile text details
 // @route   PUT /api/profile
 // @access  Private

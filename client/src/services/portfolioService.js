@@ -6,6 +6,7 @@ const portfolioService = {
     const response = await api.get('/profile');
     return response.data.profile;
   },
+  getResumeDownloadUrl: () => api.getUri({ url: '/profile/resume/download' }),
   updateProfile: async (data) => {
     const response = await api.put('/profile', data);
     return response.data.profile;
