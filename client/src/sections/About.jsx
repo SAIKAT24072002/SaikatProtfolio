@@ -2,7 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const About = ({ profile }) => {
-  if (!profile) return null;
+  const name = profile?.name || 'Saikat Khamrai';
+  const aboutText = profile?.about || "Let's build outstanding scalable MERN stack projects. I am dedicated to clean code architecture, smooth transitions, and state-of-the-art security patterns.";
 
   return (
     <section id="about" className="py-20 px-4 bg-white dark:bg-dark-bg border-t border-slate-100 dark:border-slate-900 transition-colors duration-300">
@@ -30,15 +31,15 @@ const About = ({ profile }) => {
               <div className="absolute -inset-1.5 rounded-2xl bg-gradient-to-tr from-primary-500 to-indigo-500 opacity-30 blur group-hover:opacity-75 transition duration-500"></div>
               
               <div className="relative rounded-2xl overflow-hidden glass-card aspect-square">
-                {profile.avatar ? (
+                {profile?.avatar ? (
                   <img
                     src={profile.avatar}
-                    alt={profile.name}
+                    alt={name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 ) : (
                   <div className="w-full h-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-slate-400">
-                    No Image
+                    Profile Image Loading
                   </div>
                 )}
               </div>
@@ -59,7 +60,7 @@ const About = ({ profile }) => {
               </h3>
               
               <p className="text-slate-600 dark:text-dark-textMuted leading-relaxed whitespace-pre-line">
-                {profile.about || "Let's build outstanding scalable MERN stack projects. I am dedicated to clean code architecture, smooth transitions, and state-of-the-art security patterns."}
+                {aboutText}
               </p>
 
               {/* Technical interests badges */}

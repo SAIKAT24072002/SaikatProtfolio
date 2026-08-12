@@ -1,9 +1,9 @@
-import api from './api';
+import api, { apiGet } from './api';
 
 const portfolioService = {
   // --- Profile ---
   getProfile: async () => {
-    const response = await api.get('/profile');
+    const response = await apiGet('/profile');
     return response.data.profile;
   },
   getResumeDownloadUrl: () => api.getUri({ url: '/profile/resume/download' }),
@@ -26,11 +26,11 @@ const portfolioService = {
 
   // --- Projects ---
   getProjects: async () => {
-    const response = await api.get('/projects');
+    const response = await apiGet('/projects');
     return response.data.projects;
   },
   getProjectBySlug: async (slug) => {
-    const response = await api.get(`/projects/${slug}`);
+    const response = await apiGet(`/projects/${slug}`);
     return response.data.project;
   },
   createProject: async (formData) => {
@@ -52,7 +52,7 @@ const portfolioService = {
 
   // --- Skills ---
   getSkills: async () => {
-    const response = await api.get('/skills');
+    const response = await apiGet('/skills');
     return response.data.skills;
   },
   createSkill: async (data) => {
@@ -70,7 +70,7 @@ const portfolioService = {
 
   // --- Experiences ---
   getExperiences: async () => {
-    const response = await api.get('/experiences');
+    const response = await apiGet('/experiences');
     return response.data.experiences;
   },
   createExperience: async (data) => {
@@ -88,7 +88,7 @@ const portfolioService = {
 
   // --- Education ---
   getEducation: async () => {
-    const response = await api.get('/education');
+    const response = await apiGet('/education');
     return response.data.education;
   },
   createEducation: async (data) => {
