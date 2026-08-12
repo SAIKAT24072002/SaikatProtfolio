@@ -87,6 +87,11 @@ export const uploadResume = async (req, res, next) => {
     return next(new Error('Please select a PDF document to upload.'));
   }
 
+  if (!req.file.originalname.toLowerCase().endsWith('.pdf') || req.file.buffer.subarray(0, 4).toString() !== '%PDF') {
+    res.status(400);
+    return next(new Error('Only valid PDF documents are allowed for resume attachments.'));
+  }
+
   try {
     let profile = await Profile.findOne();
     if (!profile) {
@@ -94,8 +99,11 @@ export const uploadResume = async (req, res, next) => {
       return next(new Error('Profile configurations not found.'));
     }
 
-    // Upload buffer to Cloudinary
-    const resumeUrl = await uploadToCloudinary(req.file.buffer, 'portfolio/resume');
+    // PDFs must use Cloudinary's raw delivery type. Uploading them as auto/image
+    // resources can result in a delivery 401 when PDF delivery is restricted.
+    const resumeUrl = await uploadToCloudinary(req.file.buffer, 'portfolio/resume', {
+      resource_type: 'raw'
+    });
     
     profile.resume = resumeUrl;
     await profile.save();

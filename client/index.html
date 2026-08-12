@@ -10,17 +10,19 @@
     <meta name="description" content="Welcome to the professional portfolio of Saikat Khamrai, a Full Stack MERN Developer specializing in building scalable, modern, and high-performance web applications using React, Node.js, Express, and MongoDB." />
     <meta name="keywords" content="Saikat Khamrai, MERN Stack, Full Stack Developer, React.js, Node.js, Express.js, MongoDB, Web Developer Portfolio, JavaScript Developer, Front-end Developer, Back-end Developer" />
     <meta name="author" content="Saikat Khamrai" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0f172a" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Saikat Khamrai | Full Stack MERN Developer Portfolio" />
     <meta property="og:description" content="Explore modern, responsive, and secure full-stack web applications built by Saikat Khamrai using the MERN stack." />
-    <meta property="og:image" content="/portfolio-preview.jpg" />
+    <meta property="og:site_name" content="Saikat Khamrai Portfolio" />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="Saikat Khamrai | Full Stack MERN Developer Portfolio" />
-    <meta property="twitter:description" content="Explore modern, responsive, and secure full-stack web applications built by Saikat Khamrai using the MERN stack." />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Saikat Khamrai | Full Stack MERN Developer Portfolio" />
+    <meta name="twitter:description" content="Explore modern, responsive, and secure full-stack web applications built by Saikat Khamrai using the MERN stack." />
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +30,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   </head>
   <body class="bg-light-bg text-light-text dark:bg-dark-bg dark:text-dark-text min-h-screen">
-    <div id="root"></div>
+    <div id="root">
+      <!-- This content is intentionally replaced by React after JavaScript loads.
+           It gives crawlers, web readers, and slow/no-JavaScript visits a useful page summary. -->
+      <main>
+        <h1>Saikat Khamrai — Full Stack MERN Developer</h1>
+        <p>I build responsive, secure, and scalable web applications with React, Node.js, Express, and MongoDB.</p>
+        <nav aria-label="Portfolio sections">
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#experience">Experience</a>
+          <a href="#education">Education</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <section id="about">
+          <h2>About</h2>
+          <p>Professional portfolio for Saikat Khamrai, a Full Stack MERN Developer.</p>
+        </section>
+        <section id="skills"><h2>Skills</h2><p>React, Node.js, Express, MongoDB, and JavaScript.</p></section>
+        <section id="experience"><h2>Experience</h2><p>Experience details are available in the interactive portfolio.</p></section>
+        <section id="education"><h2>Education</h2><p>Education details are available in the interactive portfolio.</p></section>
+        <section id="projects"><h2>Projects</h2><p>Explore featured full-stack projects, live demos, and GitHub repositories.</p></section>
+        <section id="contact"><h2>Contact</h2><p>Use the contact form in the interactive portfolio to get in touch.</p></section>
+      </main>
+    </div>
+    <noscript>
+      <p>This portfolio works best with JavaScript enabled. The page summary above remains available to web readers and search engines.</p>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

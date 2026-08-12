@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { User, Globe, FileUp, ShieldAlert, Check } from 'lucide-react';
+import { User, Globe, FileUp, Check } from 'lucide-react';
 import portfolioService from '../../services/portfolioService';
 
 const ProfilePanel = () => {
@@ -122,6 +122,28 @@ const ProfilePanel = () => {
     } finally {
       setUploadingResume(false);
     }
+  };
+
+  const handleResumeFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.type !== 'application/pdf' || !file.name.toLowerCase().endsWith('.pdf')) {
+      e.target.value = '';
+      setResumeFile(null);
+      setStatus({ type: 'error', text: 'Please select a valid PDF resume.' });
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      e.target.value = '';
+      setResumeFile(null);
+      setStatus({ type: 'error', text: 'Resume PDF must be 10 MB or smaller.' });
+      return;
+    }
+
+    setResumeFile(file);
+    setStatus({ type: null, text: '' });
   };
 
   if (loading) {
@@ -296,7 +318,7 @@ const ProfilePanel = () => {
         <div className="bg-white dark:bg-dark-card border border-slate-200/60 dark:border-slate-800/80 p-6 rounded-2xl shadow-sm">
           <h3 className="text-sm font-bold text-slate-800 dark:text-white mb-3">Resume Attachment</h3>
           <p className="text-xs text-slate-400 dark:text-slate-500 mb-4">
-            Upload a PDF resume to replace the file downloaded by recruiters.
+            Upload a PDF (max 10 MB). Recruiters will automatically see the latest uploaded resume.
           </p>
 
           {resumeUrl && (
@@ -311,8 +333,8 @@ const ProfilePanel = () => {
           <form onSubmit={handleResumeUpload} className="space-y-3">
             <input
               type="file"
-              accept=".pdf"
-              onChange={(e) => setResumeFile(e.target.files[0])}
+              accept=".pdf,application/pdf"
+              onChange={handleResumeFileChange}
               className="text-xs text-slate-500 w-full file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-slate-100 dark:file:bg-slate-800 file:text-slate-700 dark:file:text-slate-300 hover:file:bg-slate-200"
             />
             <button
