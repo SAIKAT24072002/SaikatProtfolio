@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import Hero from '../sections/Hero';
 import About from '../sections/About';
@@ -114,11 +114,11 @@ const ProjectsSkeletonSection = () => {
 };
 
 const Home = () => {
-  const { profile } = useOutletContext();
+  const { profile, setHasExperience } = useOutletContext();
   const [sections, setSections] = useState(createInitialSectionState);
   const isMountedRef = useRef(true);
 
-  const loadSection = async (sectionKey) => {
+  const loadSection = useCallback(async (sectionKey) => {
     setSections((prev) => ({
       ...prev,
       [sectionKey]: {
@@ -142,6 +142,8 @@ const Home = () => {
           error: null,
         },
       }));
+
+      if (sectionKey === 'experiences') setHasExperience(data.length > 0);
     } catch (err) {
       if (!isMountedRef.current) {
         return;
@@ -155,10 +157,13 @@ const Home = () => {
           error: err.message || 'This section is taking longer than expected to load.',
         },
       }));
+
+      if (sectionKey === 'experiences') setHasExperience(false);
     }
-  };
+  }, [setHasExperience]);
 
   useEffect(() => {
+    isMountedRef.current = true;
     Object.keys(SECTION_LOADERS).forEach((sectionKey) => {
       loadSection(sectionKey);
     });
@@ -166,7 +171,7 @@ const Home = () => {
     return () => {
       isMountedRef.current = false;
     };
-  }, []);
+  }, [loadSection]);
 
   return (
     <div className="overflow-hidden">
@@ -187,21 +192,7 @@ const Home = () => {
         <Skills skills={sections.skills.data} />
       )}
 
-      {sections.experiences.loading ? (
-        <TimelineSkeletonSection
-          id="experience"
-          accentClass="bg-primary-200 dark:bg-primary-900/60"
-          backgroundClass="bg-white dark:bg-dark-bg"
-        />
-      ) : sections.experiences.error ? (
-        <SectionErrorFallback
-          id="experience"
-          title="Experience is still warming up"
-          message={sections.experiences.error}
-          backgroundClass="bg-white dark:bg-dark-bg"
-          onRetry={() => loadSection('experiences')}
-        />
-      ) : (
+      {!sections.experiences.loading && !sections.experiences.error && sections.experiences.data.length > 0 && (
         <Experience experiences={sections.experiences.data} />
       )}
 

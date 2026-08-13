@@ -1,9 +1,10 @@
 import React from 'react';
 import { GraduationCap, Calendar } from 'lucide-react';
-import EmptyState from '../components/EmptyState';
 
 const Education = ({ education = [] }) => {
   const hasEdu = education && education.length > 0;
+
+  if (!hasEdu) return null;
 
   const sortedEducation = [...education].sort((a, b) => {
     // Sort by displayOrder, then by endYear descending
@@ -25,10 +26,7 @@ const Education = ({ education = [] }) => {
           <div className="h-1.5 w-16 bg-primary-500 rounded-full mx-auto mt-3"></div>
         </div>
 
-        {!hasEdu ? (
-          <EmptyState title="No education records available." message="Academic degrees and certificates will display here." />
-        ) : (
-          <div className="relative border-l border-slate-200 dark:border-slate-800 ml-4 md:ml-6 pl-6 md:pl-8 space-y-12">
+        <div className="relative border-l border-slate-200 dark:border-slate-800 ml-4 md:ml-6 pl-6 md:pl-8 space-y-12">
             {sortedEducation.map((edu) => (
               <div key={edu._id} className="relative group">
                 
@@ -60,8 +58,7 @@ const Education = ({ education = [] }) => {
 
               </div>
             ))}
-          </div>
-        )}
+        </div>
 
       </div>
     </section>

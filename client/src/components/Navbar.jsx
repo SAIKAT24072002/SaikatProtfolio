@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 
-const Navbar = ({ profile }) => {
+const Navbar = ({ profile, hasExperience = false }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
@@ -29,7 +29,7 @@ const Navbar = ({ profile }) => {
     { label: 'Home', target: 'hero' },
     { label: 'About', target: 'about' },
     { label: 'Skills', target: 'skills' },
-    { label: 'Experience', target: 'experience' },
+    ...(hasExperience ? [{ label: 'Experience', target: 'experience' }] : []),
     { label: 'Education', target: 'education' },
     { label: 'Projects', target: 'projects' },
     { label: 'Contact', target: 'contact' },

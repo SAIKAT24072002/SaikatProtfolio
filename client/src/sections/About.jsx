@@ -1,9 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { getCloudinarySrcSet, getOptimizedCloudinaryImage } from '../utils/cloudinary';
 
 const About = ({ profile }) => {
   const name = profile?.name || 'Saikat Khamrai';
   const aboutText = profile?.about || "Let's build outstanding scalable MERN stack projects. I am dedicated to clean code architecture, smooth transitions, and state-of-the-art security patterns.";
+  const avatarUrl = getOptimizedCloudinaryImage(profile?.avatar, { width: 640, height: 640 });
+  const avatarSrcSet = getCloudinarySrcSet(profile?.avatar, [320, 480, 640, 768], { heightRatio: 1 });
 
   return (
     <section id="about" className="py-20 px-4 bg-white dark:bg-dark-bg border-t border-slate-100 dark:border-slate-900 transition-colors duration-300">
@@ -33,13 +36,20 @@ const About = ({ profile }) => {
               <div className="relative rounded-2xl overflow-hidden glass-card aspect-square">
                 {profile?.avatar ? (
                   <img
-                    src={profile.avatar}
+                    src={avatarUrl}
+                    srcSet={avatarSrcSet}
+                    sizes="(min-width: 768px) 384px, calc(100vw - 2rem)"
                     alt={name}
+                    width="640"
+                    height="640"
+                    loading="lazy"
+                    decoding="async"
+                    fetchPriority="low"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 ) : (
                   <div className="w-full h-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-slate-400">
-                    Profile Image Loading
+                    <span className="sr-only">Profile image is loading</span>
                   </div>
                 )}
               </div>

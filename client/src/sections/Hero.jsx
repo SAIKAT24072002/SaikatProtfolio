@@ -31,6 +31,11 @@ const Hero = ({ profile }) => {
   const bio = profile?.bio || "I build responsive, secure, and highly scalable web applications utilizing React, Node.js, Express, and MongoDB.";
   const resumeDownloadUrl = portfolioService.getResumeDownloadUrl();
 
+  const handleResumeDownload = () => {
+    // The backend resolves the latest Admin-uploaded PDF and supplies the stable filename.
+    window.location.assign(resumeDownloadUrl);
+  };
+
   // CHARACTER-BY-CHARACTER typing and spring reveal for SAIKAT KHAMRAI
   const renderLetters = (text, startDelay, className = "") => {
     if (!text) return null;
@@ -188,14 +193,14 @@ const Hero = ({ profile }) => {
 
             {/* Tertiary: Resume */}
             {profile?.resume && (
-              <a
-                href={resumeDownloadUrl}
-                download="Saikat_Khamrai_Resume.pdf"
+              <button
+                type="button"
+                onClick={handleResumeDownload}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold rounded-xl border border-dashed border-primary-500/40 text-primary-600 dark:text-primary-400 hover:bg-primary-500/5 hover:-translate-y-0.5 hover:scale-[1.03] transition-all duration-300"
               >
                 <FileDown className="h-4.5 w-4.5" />
                 Resume
-              </a>
+              </button>
             )}
           </motion.div>
 

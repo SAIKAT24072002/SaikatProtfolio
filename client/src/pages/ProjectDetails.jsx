@@ -4,6 +4,7 @@ import { ArrowLeft, ExternalLink, ShieldCheck, AlertCircle } from 'lucide-react'
 import { FaGithub } from 'react-icons/fa';
 import portfolioService from '../services/portfolioService';
 import { DetailSkeleton } from '../components/SkeletonLoader';
+import { getCloudinarySrcSet, getOptimizedCloudinaryImage } from '../utils/cloudinary';
 
 const ProjectDetails = () => {
   const { slug } = useParams();
@@ -79,19 +80,21 @@ const ProjectDetails = () => {
       </div>
 
       {/* Large Project Image Banner */}
-      <div className="rounded-2xl overflow-hidden aspect-[21/9] border border-slate-200 dark:border-slate-800 relative bg-slate-100 dark:bg-slate-950 shadow-md">
-        {project.imageUrl ? (
+      {project.imageUrl && (
+        <div className="rounded-2xl overflow-hidden aspect-[21/9] border border-slate-200 dark:border-slate-800 relative bg-slate-100 dark:bg-slate-950 shadow-md">
           <img
-            src={project.imageUrl}
+            src={getOptimizedCloudinaryImage(project.imageUrl, { width: 1280, height: 550 })}
+            srcSet={getCloudinarySrcSet(project.imageUrl, [640, 960, 1280], { heightRatio: 0.43 })}
+            sizes="(min-width: 896px) 864px, calc(100vw - 2rem)"
             alt={project.title}
+            width="1280"
+            height="550"
+            decoding="async"
+            fetchPriority="high"
             className="w-full h-full object-cover"
           />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-slate-400">
-            No image available
-          </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Details Grid Description */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pt-4">

@@ -6,6 +6,7 @@ import portfolioService from '../services/portfolioService';
 
 const PublicLayout = () => {
   const [profile, setProfile] = useState(null);
+  const [hasExperience, setHasExperience] = useState(false);
 
   useEffect(() => {
     let isActive = true;
@@ -30,11 +31,11 @@ const PublicLayout = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar profile={profile} />
+      <Navbar profile={profile} hasExperience={hasExperience} />
       
       {/* Main Content Area */}
       <main className="flex-grow pt-16">
-        <Outlet context={{ profile }} />
+        <Outlet context={{ profile, setHasExperience }} />
       </main>
 
       <Footer profile={profile} />

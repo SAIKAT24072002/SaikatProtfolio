@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import * as LucideIcons from 'lucide-react';
-import EmptyState from '../components/EmptyState';
 
 const Skills = ({ skills = [] }) => {
   // Categorize skills
@@ -18,6 +17,8 @@ const Skills = ({ skills = [] }) => {
   };
 
   const hasSkills = skills && skills.length > 0;
+
+  if (!hasSkills) return null;
 
   // Group skills by category and sort by displayOrder
   const getSkillsByCategory = (category) => {
@@ -41,12 +42,10 @@ const Skills = ({ skills = [] }) => {
           </p>
         </div>
 
-        {!hasSkills ? (
-          <EmptyState title="No Skills Loaded" message="Skills database is currently being populated." />
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {categories.map((category) => {
               const categorySkills = getSkillsByCategory(category);
+              if (categorySkills.length === 0) return null;
               return (
                 <div 
                   key={category}
@@ -56,9 +55,6 @@ const Skills = ({ skills = [] }) => {
                     {category}
                   </h3>
                   
-                  {categorySkills.length === 0 ? (
-                    <p className="text-xs text-slate-400 dark:text-slate-500 italic">No skills listed yet.</p>
-                  ) : (
                     <ul className="space-y-3.5">
                       {categorySkills.map((skill) => (
                         <motion.li 
@@ -78,12 +74,10 @@ const Skills = ({ skills = [] }) => {
                         </motion.li>
                       ))}
                     </ul>
-                  )}
                 </div>
               );
             })}
-          </div>
-        )}
+        </div>
       </div>
     </section>
   );

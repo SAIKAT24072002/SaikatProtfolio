@@ -2,10 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ExternalLink, ArrowRight, Star } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
-import EmptyState from '../components/EmptyState';
+import { getCloudinarySrcSet, getOptimizedCloudinaryImage } from '../utils/cloudinary';
 
 const Projects = ({ projects = [] }) => {
   const hasProj = projects && projects.length > 0;
+
+  if (!hasProj) return null;
 
   // Sort: Featured first, then displayOrder, then newest
   const sortedProjects = [...projects].sort((a, b) => {
@@ -33,10 +35,7 @@ const Projects = ({ projects = [] }) => {
           </p>
         </div>
 
-        {!hasProj ? (
-          <EmptyState title="No Projects Found" message="Check back later as I upload my production applications." />
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {sortedProjects.map((project) => (
               <div 
                 key={project._id} 
@@ -54,15 +53,18 @@ const Projects = ({ projects = [] }) => {
                 <div className="aspect-video w-full overflow-hidden bg-slate-100 dark:bg-slate-900 relative">
                   {project.imageUrl ? (
                     <img
-                      src={project.imageUrl}
+                      src={getOptimizedCloudinaryImage(project.imageUrl, { width: 800, height: 450 })}
+                      srcSet={getCloudinarySrcSet(project.imageUrl, [400, 600, 800], { heightRatio: 0.5625 })}
+                      sizes="(min-width: 1024px) 352px, (min-width: 768px) 50vw, calc(100vw - 2rem)"
                       alt={project.title}
+                      width="800"
+                      height="450"
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
+                      decoding="async"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-slate-400">
-                      No Screenshot Available
-                    </div>
+                    <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800" aria-hidden="true" />
                   )}
                 </div>
 
@@ -129,8 +131,7 @@ const Projects = ({ projects = [] }) => {
 
               </div>
             ))}
-          </div>
-        )}
+        </div>
 
       </div>
     </section>

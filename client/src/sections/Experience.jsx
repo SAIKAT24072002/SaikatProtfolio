@@ -1,9 +1,10 @@
 import React from 'react';
 import { Briefcase, Calendar } from 'lucide-react';
-import EmptyState from '../components/EmptyState';
 
 const Experience = ({ experiences = [] }) => {
   const hasExp = experiences && experiences.length > 0;
+
+  if (!hasExp) return null;
 
   const formatDate = (dateStr) => {
     if (!dateStr) return 'Present';
@@ -31,10 +32,7 @@ const Experience = ({ experiences = [] }) => {
           <div className="h-1.5 w-16 bg-primary-500 rounded-full mx-auto mt-3"></div>
         </div>
 
-        {!hasExp ? (
-          <EmptyState title="No Work History Found" message="Work experience and project involvements will display here." />
-        ) : (
-          <div className="relative border-l border-slate-200 dark:border-slate-800 ml-4 md:ml-6 pl-6 md:pl-8 space-y-12">
+        <div className="relative border-l border-slate-200 dark:border-slate-800 ml-4 md:ml-6 pl-6 md:pl-8 space-y-12">
             {sortedExperiences.map((exp) => (
               <div key={exp._id} className="relative group">
                 
@@ -82,8 +80,7 @@ const Experience = ({ experiences = [] }) => {
 
               </div>
             ))}
-          </div>
-        )}
+        </div>
 
       </div>
     </section>
